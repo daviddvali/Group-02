@@ -4,9 +4,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        //Animal animal = new Animal();
-        //Console.WriteLine();
-        Dog dog = new Dog();
+        Animal animal = new Animal("lomi");
+        Console.WriteLine();
+        Dog dog = new Dog("rexi");
         Console.WriteLine();
         Cat cat = new Cat();
         Console.WriteLine();

@@ -2,12 +2,12 @@
 
 public class Animal : Creature
 {
-	public Animal()
-	{
-		Console.ForegroundColor = ConsoleColor.Green;
-		Console.WriteLine("Animal was created!");
-		Console.ResetColor();
-	}
+	//public Animal()
+	//{
+	//	Console.ForegroundColor = ConsoleColor.Green;
+	//	Console.WriteLine("Animal was created!");
+	//	Console.ResetColor();
+	//}
 
 	public Animal(string name)
 	{

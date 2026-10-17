@@ -13,4 +13,9 @@ public class Human : Creature
     {
         Console.WriteLine("Human is speaking");
     }
+
+    protected override void Breath()
+    {
+        Console.WriteLine("Human is breathing with lungs");
+    }
 }

@@ -13,4 +13,9 @@ public class Alf : Alien
     {
         Console.WriteLine("Alf is eating cats!");
     }
+
+    protected override void Breath()
+    {
+        Console.WriteLine("Alf is breathing with alien lungs");
+    }
 }

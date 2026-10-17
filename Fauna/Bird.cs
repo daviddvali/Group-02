@@ -13,4 +13,9 @@ public class Bird : Creature
     {
         Console.WriteLine("Bird is flying");
     }
+
+    protected override void Breath()
+    {
+        Console.WriteLine("Bird is breathing with lungs");
+    }
 }

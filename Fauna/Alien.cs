@@ -1,6 +1,6 @@
 ﻿namespace Fauna;
 
-public class Alien : Creature
+public abstract class Alien : Creature
 {
     public Alien()
     {

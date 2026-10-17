@@ -20,4 +20,10 @@ public class Dog : Animal
     {
         Console.WriteLine("Dog is barking");
     }
+
+    protected override void Breath()
+    {
+        base.Breath();
+        Console.WriteLine("Dog is breathing with lungs");
+    }
 }

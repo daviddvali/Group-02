@@ -13,4 +13,10 @@ public class SuperDog : Dog
     {
         Console.WriteLine("SuperDog is flying");
     }
+
+    protected override void Breath()
+    {
+        base.Breath();
+        Console.WriteLine("SuperDog is breathing with lungs");
+    }
 }

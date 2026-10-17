@@ -1,6 +1,6 @@
 ﻿namespace Fauna;
 
-public class Creature
+public abstract class Creature
 {
     public Creature()
     {
@@ -19,8 +19,5 @@ public class Creature
         Console.WriteLine("Creature is moving");
     }
 
-    protected void Breath()
-    {
-        Console.WriteLine("Creature is breathing");
-    }
+    protected abstract void Breath();
 }

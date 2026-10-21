@@ -14,6 +14,11 @@ public class Fish : Creature
         Console.WriteLine("Fish is swimming");
     }
 
+    public override void Move()
+    {
+        Swim();
+    }
+
     protected override void Breath()
     {
         Console.WriteLine("Fish is breathing with gills");

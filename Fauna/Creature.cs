@@ -14,7 +14,7 @@ public abstract class Creature
 
     public double Weight { get; set; }
 
-    public void Move()
+    public virtual void Move()
     {
         Console.WriteLine("Creature is moving");
     }

@@ -21,6 +21,11 @@ public class Dog : Animal
         Console.WriteLine("Dog is barking");
     }
 
+    public override void Move()
+    {
+        Console.WriteLine("Dog is moving");
+    }
+
     protected override void Breath()
     {
         base.Breath();

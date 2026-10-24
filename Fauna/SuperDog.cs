@@ -14,10 +14,14 @@ public class SuperDog : Dog
         Console.WriteLine("SuperDog is flying");
     }
 
-    public override void Move()
+    public override bool Equals(object? obj)
     {
-        base.Move();
-        Fly();
+        if (obj is SuperDog otherSuperDog)
+        {
+            return this.Name == otherSuperDog.Name && 
+                   this.Weight == otherSuperDog.Weight;
+        }
+        return false;
     }
 
     protected override void Breath()

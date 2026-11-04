@@ -1,13 +1,18 @@
-﻿namespace G02_BankSystem.Bank;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-public sealed class VisaCard
+namespace G02_BankSystem.Cards;
+
+public abstract class Card
 {
-    public VisaCard(
-        string cardNumber,
+    public Card(string cardNumber,
         string cardHolderName,
         DateOnly expiryDate,
         string cvv)
     {
+
         // Validate the input parameters.
         ValidateCardNumber(cardNumber);
         ValidateCardHolderName(cardHolderName);
@@ -21,42 +26,42 @@ public sealed class VisaCard
         CVV = cvv;
         Balance = 0;
         IsActive = true;
-    }
 
+    }
     public string CardNumber { get; }
     public string CardHolderName { get; }
     public DateOnly ExpiryDate { get; }
     public string CVV { get; }
     public decimal Balance { get; private set; }
     public bool IsActive { get; private set; }
-    public decimal WithdrawFee => 0.01m;
+    public abstract decimal WithdrawFee { get; }
 
-    public void Deposit(decimal amount)
+    public virtual void Deposit(decimal amount)
     {
         if (amount <= 0)
             throw new ArgumentOutOfRangeException(nameof(amount), "The deposit amount must be positive.");
         Balance += amount;
     }
 
-    public void Withdraw(decimal amount)
+    public virtual void Withdraw(decimal amount)
     {
         if (amount <= 0)
             throw new ArgumentOutOfRangeException(nameof(amount), "The withdrawal amount must be positive.");
-        
+
         decimal totalAmount = amount + CalculateWithdrawFee(amount);
         if (totalAmount > Balance)
             throw new InvalidOperationException("Insufficient funds.");
         Balance -= totalAmount;
     }
 
-    public void Deactivate()
+    public virtual void Deactivate()
     {
         if (!IsActive)
             throw new InvalidOperationException("The card is already deactivated.");
         IsActive = false;
     }
 
-    public void Activate()
+    public virtual void Activate()
     {
         if (IsActive)
             throw new InvalidOperationException("The card is already activated.");
@@ -68,13 +73,8 @@ public sealed class VisaCard
         return amount * WithdrawFee;
     }
 
-    private static void ValidateCardNumber(string cardNumber)
-    {
-        ArgumentNullException.ThrowIfNull(cardNumber);
+    public abstract void ValidateCardNumber(string cardNumber);
 
-        if (cardNumber.Length != 16 || cardNumber[0] != '4' || !IsOnlyNumbers(cardNumber))
-            throw new ArgumentException("A Visa card number must start with 4 and contain only digits.", nameof(cardNumber));
-    }
 
     private static void ValidateCardHolderName(string cardHolderName)
     {
@@ -99,17 +99,18 @@ public sealed class VisaCard
             throw new ArgumentException("A Visa CVV must contain exactly 3 digits.", nameof(cvv));
     }
 
-    private static bool IsOnlyNumbers(string text)
+    protected static bool IsOnlyNumbers(string text)
     {
-        for (int i = 0; i < text.Length; i++)
+        if (string.IsNullOrEmpty(text))
+            return false;
+
+        foreach (char c in text)
         {
-            if (text[i] != '0' && text[i] != '1' &&
-                text[i] != '2' && text[i] != '3' &&
-                text[i] != '4' && text[i] != '5' &&
-                text[i] != '6' && text[i] != '7' &&
-                text[i] != '8' && text[i] != '9')
-                return false;
+            if (!char.IsBetween(c, '0', '9')) 
+                return false;   
         }
+
         return true;
+
     }
 }

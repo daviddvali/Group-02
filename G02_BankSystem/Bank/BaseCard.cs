@@ -1,8 +1,8 @@
 ﻿namespace G02_BankSystem.Bank;
 
-public abstract class DebitCard
+public abstract class BaseCard
 {
-    protected DebitCard(
+    protected BaseCard(
         string cardNumber,
         string cardHolderName,
         DateOnly expiryDate,
@@ -30,11 +30,15 @@ public abstract class DebitCard
     public decimal Balance { get; private set; }
     public bool IsActive { get; private set; }
     public abstract decimal WithdrawFee { get; }
+    protected virtual int ValidCardNumberLength => 16;
+    protected virtual int ValidCardCvvLength => 3;
 
     public void Deposit(decimal amount)
     {
         if (amount <= 0)
             throw new ArgumentOutOfRangeException(nameof(amount), "The deposit amount must be positive.");
+        if (!IsActive)
+            throw new InvalidOperationException("Cannot deposit to an inactive card.");
         Balance += amount;
     }
 
@@ -42,7 +46,9 @@ public abstract class DebitCard
     {
         if (amount <= 0)
             throw new ArgumentOutOfRangeException(nameof(amount), "The withdrawal amount must be positive.");
-        
+        if (!IsActive)
+            throw new InvalidOperationException("Cannot withdraw from an inactive card.");
+
         decimal totalAmount = amount + CalculateWithdrawFee(amount);
         if (totalAmount > Balance)
             throw new InvalidOperationException("Insufficient funds.");
@@ -63,20 +69,25 @@ public abstract class DebitCard
         IsActive = true;
     }
 
-    protected virtual decimal CalculateWithdrawFee(decimal amount)
+    protected decimal CalculateWithdrawFee(decimal amount)
     {
         return amount * WithdrawFee;
     }
 
-    protected abstract void ValidateCardNumber(string cardNumber);
-    
+    protected virtual void ValidateCardNumber(string cardNumber)
+    {
+        ArgumentNullException.ThrowIfNull(cardNumber);
 
-    private static void ValidateCardHolderName(string cardHolderName)
+        if (cardNumber.Length != ValidCardNumberLength || !IsOnlyNumbers(cardNumber))
+            throw new ArgumentException($"A card number must contain exactly {ValidCardNumberLength} digits.", nameof(cardNumber));
+    }
+
+    protected virtual void ValidateCardHolderName(string cardHolderName)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(cardHolderName);
     }
 
-    private static void ValidateExpiryDate(DateOnly expiryDate)
+    protected virtual void ValidateExpiryDate(DateOnly expiryDate)
     {
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
         DateOnly firstDayOfCurrentMonth = new DateOnly(today.Year, today.Month, 1);
@@ -86,12 +97,12 @@ public abstract class DebitCard
             throw new ArgumentOutOfRangeException(nameof(expiryDate), "The card has expired.");
     }
 
-    private static void ValidateCVV(string cvv)
+    protected virtual void ValidateCVV(string cvv)
     {
         ArgumentNullException.ThrowIfNull(cvv);
 
-        if (cvv.Length != 3 || !IsOnlyNumbers(cvv))
-            throw new ArgumentException("CVV must contain exactly 3 digits.", nameof(cvv));
+        if (cvv.Length != ValidCardCvvLength || !IsOnlyNumbers(cvv))
+            throw new ArgumentException($"CVV must contain exactly {ValidCardCvvLength} digits.", nameof(cvv));
     }
 
     protected static bool IsOnlyNumbers(string text)

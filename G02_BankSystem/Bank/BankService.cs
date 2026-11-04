@@ -2,31 +2,33 @@
 
 public static class BankService
 {
-    public static void DepositToCard(DebitCard card, decimal amount)
+    public static void DepositToCard(BaseCard card, decimal amount)
     {
         if (card == null)
         {
             throw new ArgumentNullException(nameof(card), "Card cannot be null.");
         }
-        LogDepositMessage($"Depositing {amount:C} to card {card.CardNumber}");
+        string cardType = card.GetType().Name;
+        LogDepositMessage($"Depositing {amount:C} to {cardType} {card.CardNumber}");
         card.Deposit(amount);
-        LogDepositMessage($"Deposit {amount:C} to card {card.CardNumber} completed");
-        LogDepositMessage($"Balance on card {card.CardNumber} is {card.Balance:C}");
+        LogDepositMessage($"Deposit {amount:C} to {cardType} {card.CardNumber} completed");
+        LogDepositMessage($"Balance on {cardType} {card.CardNumber} is {card.Balance:C}");
     }
 
-    public static void WithdrawFromCard(DebitCard card, decimal amount)
+    public static void WithdrawFromCard(BaseCard card, decimal amount)
     {
         if (card == null)
         {
             throw new ArgumentNullException(nameof(card), "Card cannot be null.");
         }
-        LogWithdrawalMessage($"Withdrawing {amount:C} from card {card.CardNumber}");
+        string cardType = card.GetType().Name;
+        LogWithdrawalMessage($"Withdrawing {amount:C} from {cardType} {card.CardNumber}");
         card.Withdraw(amount);
-        LogWithdrawalMessage($"Withdrawal {amount:C} from card {card.CardNumber} completed");
-        LogWithdrawalMessage($"Balance on card {card.CardNumber} is {card.Balance:C}");
+        LogWithdrawalMessage($"Withdrawal {amount:C} from {cardType} {card.CardNumber} completed");
+        LogWithdrawalMessage($"Balance on {cardType} {card.CardNumber} is {card.Balance:C}");
     }
 
-    public static void TransferBetweenCards(DebitCard fromCard, DebitCard toCard, decimal amount)
+    public static void TransferBetweenCards(BaseCard fromCard, BaseCard toCard, decimal amount)
     {
         if (fromCard == null)
         {
@@ -36,12 +38,14 @@ public static class BankService
         {
             throw new ArgumentNullException(nameof(toCard), "To card cannot be null.");
         }
-        LogTransferMessage($"Transferring {amount:C} from card {fromCard.CardNumber} to card {toCard.CardNumber}");
+        string fromCardType = fromCard.GetType().Name;
+        string toCardType = toCard.GetType().Name;
+        LogTransferMessage($"Transferring {amount:C} from {fromCardType} {fromCard.CardNumber} to {toCardType} {toCard.CardNumber}");
         fromCard.Withdraw(amount);
         toCard.Deposit(amount);
-        LogTransferMessage($"Transfer {amount:C} from card {fromCard.CardNumber} to card {toCard.CardNumber} completed");
-        LogTransferMessage($"Balance on card {fromCard.CardNumber} is {fromCard.Balance:C}");
-        LogTransferMessage($"Balance on card {toCard.CardNumber} is {toCard.Balance:C}");
+        LogTransferMessage($"Transfer {amount:C} from {fromCardType} {fromCard.CardNumber} to {toCardType} {toCard.CardNumber} completed");
+        LogTransferMessage($"Balance on {fromCardType} {fromCard.CardNumber} is {fromCard.Balance:C}");
+        LogTransferMessage($"Balance on {toCardType} {toCard.CardNumber} is {toCard.Balance:C}");
     }
 
     private static void LogMessage(string message, ConsoleColor color)

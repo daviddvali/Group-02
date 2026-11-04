@@ -6,13 +6,13 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        DebitCard visaCard = new VisaCard(
+        VisaCard visaCard = new VisaCard(
             "4123123456789012",
             "John Doe",
             DateOnly.FromDateTime(DateTime.Now.AddYears(1)),
             "123");
-
-        DebitCard masterCard = new MasterCard(
+            
+        MasterCard masterCard = new MasterCard(
             "5123123456789013",
             "Jane Smith",
             DateOnly.FromDateTime(DateTime.Now.AddYears(2)),

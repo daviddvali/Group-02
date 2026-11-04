@@ -6,23 +6,26 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        VisaCard testCard1 = new VisaCard(
+        DebitCard visaCard = new VisaCard(
             "4123123456789012",
             "John Doe",
             DateOnly.FromDateTime(DateTime.Now.AddYears(1)),
             "123");
 
-        VisaCard testCard2 = new VisaCard(
-            "4123123456789013",
+        DebitCard masterCard = new MasterCard(
+            "5123123456789013",
             "Jane Smith",
             DateOnly.FromDateTime(DateTime.Now.AddYears(2)),
             "456");
-
-        //testCard1.Deactivate();
-        BankService.DepositToCard(testCard1, 1000);
+              
+        BankService.DepositToCard(visaCard, 1000);
         Console.WriteLine();
-        BankService.WithdrawFromCard(testCard1, 100);
+        BankService.WithdrawFromCard(visaCard, 100);
         Console.WriteLine();
-        BankService.TransferBetweenCards(testCard1, testCard2, 500);
+        BankService.TransferBetweenCards(visaCard, masterCard, 500);
+        Console.WriteLine();
+        BankService.WithdrawFromCard(masterCard, 100);
+        Console.WriteLine();
+        BankService.TransferBetweenCards(masterCard, visaCard, 200);
     }
 }

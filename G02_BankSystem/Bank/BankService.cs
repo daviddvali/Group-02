@@ -2,7 +2,7 @@
 
 public static class BankService
 {
-    public static void DepositToCard(VisaCard card, decimal amount)
+    public static void DepositToCard(DebitCard card, decimal amount)
     {
         if (card == null)
         {
@@ -14,7 +14,7 @@ public static class BankService
         LogDepositMessage($"Balance on card {card.CardNumber} is {card.Balance:C}");
     }
 
-    public static void WithdrawFromCard(VisaCard card, decimal amount)
+    public static void WithdrawFromCard(DebitCard card, decimal amount)
     {
         if (card == null)
         {
@@ -26,7 +26,7 @@ public static class BankService
         LogWithdrawalMessage($"Balance on card {card.CardNumber} is {card.Balance:C}");
     }
 
-    public static void TransferBetweenCards(VisaCard fromCard, VisaCard toCard, decimal amount)
+    public static void TransferBetweenCards(DebitCard fromCard, DebitCard toCard, decimal amount)
     {
         if (fromCard == null)
         {

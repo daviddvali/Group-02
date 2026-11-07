@@ -4,21 +4,35 @@ class Program
 {
     static void Main()
     {
-        //Object x = new SuperDog();
-        //x.ToString();
-        //x.Move();
-        //x.Run();
-        //x.Bark();
-        //x.Fly();
+        Dog dog1 = new Dog();
+        Dog dog2 = new Dog();
+        SuperDog superDog = new SuperDog();
+        Cat cat = new Cat();
+        Shark shark = new Shark();
 
-        SuperDog superDog1 = new SuperDog(); 
-        superDog1.Name = "SuperDog1";
-        superDog1.Weight = 15;
+        CallMove(dog1);
+        CallMove(dog2);
+        CallMove(superDog);
+        CallMove(cat);
+        CallMove(shark);
+    }
 
-        SuperDog superDog2 = new SuperDog(); 
-        superDog2.Name = "SuperDog2";
-        superDog2.Weight = 15;
-
-        Console.WriteLine(superDog1.Equals(superDog2)); 
+    static void CallMove(Creature creature)
+    {
+        creature.Move();
+        if (creature is Dog dog)
+        {
+            dog.Bark();
+            dog.Bark();
+            dog.Bark();
+        }
+        //if (creature is Dog)
+        //{
+        //    Dog dog = (Dog)creature;
+        //    //Dog dog = creature as Dog;
+        //    dog.Bark();
+        //    dog.Bark();
+        //    dog.Bark();
+        //}
     }
 }

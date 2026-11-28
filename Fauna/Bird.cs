@@ -1,6 +1,6 @@
 ﻿namespace Fauna;
 
-public class Bird : Creature
+public class Bird : Creature, IFlyable
 {
     public Bird()
     {

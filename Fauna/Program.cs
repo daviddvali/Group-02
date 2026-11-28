@@ -4,35 +4,23 @@ class Program
 {
     static void Main()
     {
-        Dog dog1 = new Dog();
-        Dog dog2 = new Dog();
+        Bird bird = new Bird();
+        Eagle eagle = new Eagle();
+        Chicken chicken = new Chicken();
+        Bee bee = new Bee();
         SuperDog superDog = new SuperDog();
-        Cat cat = new Cat();
-        Shark shark = new Shark();
+        Plane plane = new Plane();
 
-        CallMove(dog1);
-        CallMove(dog2);
-        CallMove(superDog);
-        CallMove(cat);
-        CallMove(shark);
+        CallFly(bird);
+        CallFly(eagle);
+        CallFly(chicken);
+        CallFly(bee);
+        CallFly(superDog);
+        CallFly(plane);
     }
 
-    static void CallMove(Creature creature)
+    static void CallFly(IFlyable flyable)
     {
-        creature.Move();
-        if (creature is Dog dog)
-        {
-            dog.Bark();
-            dog.Bark();
-            dog.Bark();
-        }
-        //if (creature is Dog)
-        //{
-        //    Dog dog = (Dog)creature;
-        //    //Dog dog = creature as Dog;
-        //    dog.Bark();
-        //    dog.Bark();
-        //    dog.Bark();
-        //}
+        flyable.Fly();
     }
 }

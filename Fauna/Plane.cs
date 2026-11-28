@@ -1,10 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Fauna;
 
-namespace Fauna
+public class Plane : Vehicle, IFlyable
 {
-    public class Plane : Vehicle
+    public override void Move()
     {
+        Console.WriteLine("The plane is moving");
+    }
+
+    public void Fly()
+    {
+        Console.WriteLine("The plane is flying");
     }
 }

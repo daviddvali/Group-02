@@ -1,6 +1,6 @@
 ﻿namespace Fauna;
 
-public class SuperDog : Dog
+public class SuperDog : Dog, IFlyable
 {
     public SuperDog()
     {

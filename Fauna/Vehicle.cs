@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Fauna;
 
-namespace Fauna
+public abstract class Vehicle
 {
-    public class Vehicle
-    {
-    }
+    public int Weight { get; set; }
+
+    public abstract void Move();
 }

@@ -1,6 +1,6 @@
 ﻿namespace Fauna;
 
-public class Bee : Insect
+public class Bee : Insect, IFlyable
 {
     public Bee()
     {
